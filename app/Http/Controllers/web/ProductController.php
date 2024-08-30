@@ -1,90 +1,72 @@
 <?php
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers\web;
 
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View
     {
         $products = Product::paginate(10);
-
         return view('products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function home(): View
+    {
+        $products = Product::paginate(10);
+        return view('products.home', compact('products'));
+    }
+
+    public function create(): View
     {
         return view('products.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $this->validateProduct($request);
-
         Product::create($validated);
-
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id): View
     {
         $product = Product::findOrFail($id);
-
         return view('products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function showes(string $id): View
     {
         $product = Product::findOrFail($id);
+        return view('products.showes', compact('product'));
+    }
 
+    public function edit(string $id): View
+    {
+        $product = Product::findOrFail($id);
         return view('products.edit', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         $validated = $this->validateProduct($request);
-
         $product = Product::findOrFail($id);
         $product->update($validated);
-
         return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         $product = Product::findOrFail($id);
         $product->delete();
-
         return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
     }
 
-    /**
-     * Validate the product data.
-     */
-    protected function validateProduct(Request $request)
+    protected function validateProduct(Request $request): array
     {
         return $request->validate([
             'name'  => ['required', 'string', 'max:100'],

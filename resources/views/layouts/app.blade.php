@@ -1,4 +1,3 @@
-Baru! Pintasan keyboard … Pintasan keyboard Drive telah diperbarui untuk memberi Anda navigasi huruf pertama
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>

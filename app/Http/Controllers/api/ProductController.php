@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -12,9 +12,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(5);
 
-        return response()->json(['products' => $products], 200);
+        return response()->json([
+            'products' => $products
+            ], 200);
     }
 
     /**
@@ -26,7 +28,9 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
 
-        return response()->json(['product' => $product], 201);
+        return response()->json([
+            'product' => $product
+        ], 201);
     }
 
     /**
@@ -36,7 +40,9 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return response()->json(['product' => $product], 200);
+        return response()->json([
+            'product' => $product
+        ], 200);
     }
 
     /**
@@ -50,7 +56,9 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return response()->json(['product' => $product], 200);
+        return response()->json([
+            'product' => $product
+        ], 200);
     }
 
     /**
@@ -62,7 +70,9 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return response()->json(null, 204);
+        return response()->json(
+            null, 204
+        );
     }
 
     /**

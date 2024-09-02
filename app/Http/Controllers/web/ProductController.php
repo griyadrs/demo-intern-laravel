@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\web;
 
 use App\Models\Product;
@@ -11,7 +12,7 @@ class ProductController extends Controller
 {
     public function index(): View
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate(5);
         return view('products.index', compact('products'));
     }
 
@@ -39,10 +40,10 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
-    public function showes(string $id): View
+    public function show_demo_data(string $id): View
     {
         $product = Product::findOrFail($id);
-        return view('products.showes', compact('product'));
+        return view('products.show_demo_data', compact('product'));
     }
 
     public function edit(string $id): View

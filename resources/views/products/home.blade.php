@@ -41,7 +41,7 @@
                         <td>${{ number_format($product->price, 2) }}</td>
                         <td>{{ $product->stock }}</td>
                         <td>
-                            <a href="{{ route('products.showes', $product->id) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('products.show_demo_data', $product->id) }}" class="btn btn-info btn-sm">View</a>
                         </td>
                     </tr>
                 @endforeach
